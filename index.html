@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taller M · Cerámica Gres</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream: #FBF3EC;
+    --cream-deep: #F3E6DA;
+    --ink: #4A3B30;
+    --ink-soft: #8A7768;
+    --clay: #C97B5A;
+    --clay-deep: #B25F3E;
+    --sage: #7FA39A;
+    --mustard: #D9A441;
+    --line: rgba(74,59,48,0.16);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Jost', sans-serif;
+    font-weight:300;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.script{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    letter-spacing:-0.01em;
+  }
+  a{color:inherit; text-decoration:none;}
+  img{display:block; max-width:100%;}
+  .wrap{max-width:1140px; margin:0 auto; padding:0 32px;}
+  .eyebrow{
+    font-family:'Jost',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.22em;
+    font-size:12px;
+    color:var(--clay-deep);
+    font-weight:500;
+  }
+
+  /* roof divider — the house silhouette from the logo, used as a recurring motif */
+  .roofline{
+    width:100%;
+    height:34px;
+    display:block;
+  }
+  .roofline path{ fill:var(--cream); }
+  .roofline.flip{ transform: rotate(180deg); }
+
+  /* HEADER */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    background:rgba(251,243,236,0.86);
+    backdrop-filter: blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 32px; max-width:1140px; margin:0 auto;
+  }
+  .brand{display:flex; align-items:center; gap:10px;}
+  .brand img{height:42px; width:auto;}
+  .navlinks{display:flex; gap:34px; font-size:14px; letter-spacing:0.02em;}
+  .navlinks a{position:relative; padding:4px 0; color:var(--ink);}
+  .navlinks a::after{
+    content:''; position:absolute; left:0; bottom:0; height:1px; width:0;
+    background:var(--clay-deep); transition:width .25s ease;
+  }
+  .navlinks a:hover::after{width:100%;}
+  .nav-cta{
+    border:1px solid var(--ink); padding:9px 20px; border-radius:30px;
+    font-size:13px; letter-spacing:0.04em; transition:all .25s ease;
+  }
+  .nav-cta:hover{background:var(--ink); color:var(--cream);}
+  .burger{display:none; cursor:pointer;}
+
+  /* HERO */
+  .hero{
+    padding:170px 0 90px;
+    position:relative;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap:60px;
+    align-items:center;
+  }
+  .hero h1{
+    font-size:clamp(38px, 5vw, 60px);
+    line-height:1.05;
+    margin:18px 0 22px;
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--clay-deep);
+  }
+  .hero p{
+    max-width:440px;
+    color:var(--ink-soft);
+    font-size:17px;
+  }
+  .hero-ctas{ display:flex; gap:14px; margin-top:34px; flex-wrap:wrap;}
+  .btn{
+    padding:14px 28px; border-radius:30px; font-size:14px; letter-spacing:0.03em;
+    display:inline-block; transition: all .25s ease; border:1px solid transparent;
+  }
+  .btn-primary{background:var(--clay-deep); color:var(--cream);}
+  .btn-primary:hover{background:var(--ink); transform:translateY(-2px);}
+  .btn-ghost{border-color:var(--ink); color:var(--ink);}
+  .btn-ghost:hover{background:var(--ink); color:var(--cream);}
+
+  .hero-photo{
+    position:relative;
+    border-radius: 4px 120px 4px 4px;
+    overflow:hidden;
+    box-shadow: 0 30px 60px -20px rgba(74,59,48,0.35);
+  }
+  .hero-photo img{width:100%; height:560px; object-fit:cover;}
+  .hero-tag{
+    position:absolute; bottom:-22px; left:-22px;
+    background:var(--cream); border:1px solid var(--line);
+    padding:16px 22px; border-radius:50%;
+    width:118px; height:118px;
+    display:flex; align-items:center; justify-content:center;
+    text-align:center;
+    font-family:'Fraunces',serif; font-style:italic; font-size:14px;
+    box-shadow: 0 14px 30px -10px rgba(74,59,48,0.3);
+    transform:rotate(-8deg);
+  }
+
+  section{padding:90px 0;}
+  .section-head{max-width:560px; margin-bottom:50px;}
+  .section-head h2{font-size:clamp(28px,3.4vw,40px); margin-top:14px;}
+  .section-head p{color:var(--ink-soft); margin-top:14px; font-size:16px;}
+  .center{text-align:center; margin-left:auto; margin-right:auto;}
+
+  /* ABOUT */
+  .about{ background:var(--cream-deep); position:relative;}
+  .about-grid{
+    display:grid; grid-template-columns: 0.85fr 1.15fr; gap:64px; align-items:center;
+  }
+  .about-photo{position:relative;}
+  .about-photo img{
+    width:100%; border-radius:4px 4px 100px 4px; height:460px; object-fit:cover;
+    box-shadow: 0 24px 50px -18px rgba(74,59,48,0.3);
+  }
+  .about-photo::before{
+    content:''; position:absolute; inset:18px -18px -18px 18px;
+    border:1px solid var(--clay); border-radius:4px 4px 100px 4px; z-index:-1;
+  }
+  .about-text h2{font-size:clamp(26px,3vw,34px); margin:14px 0 18px;}
+  .about-text p{color:var(--ink-soft); margin-bottom:16px; font-size:16px;}
+  .signature{
+    font-family:'Fraunces',serif; font-style:italic; font-size:22px; color:var(--clay-deep);
+    margin-top:24px;
+  }
+
+  /* TALLERES */
+  .courses{display:grid; grid-template-columns:1fr 1fr; gap:32px;}
+  .course-card{
+    background:var(--cream-deep);
+    border-radius:6px;
+    padding:38px 36px 36px;
+    position:relative;
+    border:1px solid var(--line);
+    transition: transform .3s ease, box-shadow .3s ease;
+  }
+  .course-card:hover{ transform:translateY(-6px); box-shadow:0 24px 40px -20px rgba(74,59,48,0.3);}
+  .course-card.featured{ background:var(--ink); color:var(--cream); }
+  .course-card.featured .eyebrow{color:var(--mustard);}
+  .course-card.featured .feat li{color:rgba(251,243,236,0.82);}
+  .course-card.featured .feat li::before{ background:var(--mustard);}
+  .course-card h3{font-size:26px; margin:12px 0 4px;}
+  .course-sub{font-size:14px; color:var(--ink-soft); font-style:italic; font-family:'Fraunces',serif;}
+  .course-card.featured .course-sub{color:rgba(251,243,236,0.7);}
+  .feat{ list-style:none; margin:26px 0 30px;}
+  .feat li{
+    padding:10px 0 10px 26px; position:relative; font-size:15px;
+    border-bottom:1px solid var(--line);
+  }
+  .course-card.featured .feat li{border-bottom-color:rgba(251,243,236,0.14);}
+  .feat li::before{
+    content:''; position:absolute; left:0; top:16px; width:7px; height:7px;
+    background:var(--clay-deep); border-radius:50%;
+  }
+  .course-card .btn{width:100%; text-align:center;}
+
+  /* GALLERY */
+  .gallery{background:var(--cream-deep);}
+  .gallery-grid{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 170px;
+    gap:14px;
+  }
+  .gallery-grid img{
+    width:100%; height:100%; object-fit:cover; border-radius:4px;
+    transition:transform .5s ease, filter .5s ease;
+  }
+  .gallery-grid figure{ overflow:hidden; border-radius:4px; margin:0;}
+  .gallery-grid figure:hover img{transform:scale(1.08);}
+  .gallery-grid figure:nth-child(1){grid-column:span 2; grid-row:span 2;}
+  .gallery-grid figure:nth-child(6){grid-column:span 2;}
+  .insta-note{margin-top:28px; font-size:14px; color:var(--ink-soft); text-align:center;}
+
+  /* FAQ */
+  .faq-list{ max-width:760px; margin:0 auto;}
+  .faq-item{ border-bottom:1px solid var(--line); }
+  .faq-q{
+    width:100%; text-align:left; background:none; border:none; cursor:pointer;
+    padding:22px 0; display:flex; justify-content:space-between; align-items:center;
+    font-family:'Fraunces',serif; font-size:18px; color:var(--ink);
+  }
+  .faq-q .icon{
+    font-size:20px; color:var(--clay-deep); transition:transform .3s ease; flex:none; margin-left:20px;
+  }
+  .faq-item.open .faq-q .icon{transform:rotate(45deg);}
+  .faq-a{
+    max-height:0; overflow:hidden; transition:max-height .35s ease;
+    color:var(--ink-soft); font-size:15px;
+  }
+  .faq-a-inner{padding-bottom:22px; max-width:600px;}
+  .faq-item.open .faq-a{max-height:240px;}
+
+  /* CONTACT */
+  .contact{ background:var(--ink); color:var(--cream); position:relative; overflow:hidden;}
+  .contact .eyebrow{color:var(--mustard);}
+  .contact-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start;
+  }
+  .contact h2{font-size:clamp(28px,3.6vw,42px); margin:14px 0 18px;}
+  .contact p{color:rgba(251,243,236,0.75); max-width:420px; font-size:16px;}
+  .contact-channels{margin-top:32px; display:flex; flex-direction:column; gap:18px;}
+  .channel{
+    display:flex; align-items:center; gap:14px; padding:16px 18px;
+    border:1px solid rgba(251,243,236,0.18); border-radius:8px;
+    transition: border-color .25s ease, background .25s ease;
+  }
+  .channel:hover{border-color:var(--mustard); background:rgba(251,243,236,0.04);}
+  .channel .ic{
+    width:38px; height:38px; border-radius:50%; background:var(--clay-deep);
+    display:flex; align-items:center; justify-content:center; flex:none; font-size:16px;
+  }
+  .channel-label{font-size:12px; text-transform:uppercase; letter-spacing:0.12em; color:rgba(251,243,236,0.55);}
+  .channel-value{font-size:15px; margin-top:2px;}
+
+  .contact-form{
+    background:rgba(251,243,236,0.04);
+    border:1px solid rgba(251,243,236,0.16);
+    border-radius:10px; padding:32px;
+  }
+  .contact-form label{font-size:12px; text-transform:uppercase; letter-spacing:0.1em; color:rgba(251,243,236,0.55); display:block; margin-bottom:8px;}
+  .contact-form input, .contact-form textarea, .contact-form select{
+    width:100%; background:transparent; border:none; border-bottom:1px solid rgba(251,243,236,0.25);
+    color:var(--cream); padding:10px 2px; font-family:'Jost',sans-serif; font-size:15px;
+    margin-bottom:24px; outline:none; transition:border-color .25s ease;
+  }
+  .contact-form input:focus, .contact-form textarea:focus, .contact-form select:focus{ border-color:var(--mustard);}
+  .contact-form textarea{resize:vertical; min-height:80px;}
+  .contact-form select option{ color:#000;}
+  .contact-form .btn-primary{ width:100%; text-align:center; border:none; cursor:pointer; background:var(--mustard); color:var(--ink); font-weight:500;}
+  .contact-form .btn-primary:hover{ background:var(--cream);}
+  .form-note{font-size:12px; color:rgba(251,243,236,0.5); margin-top:14px;}
+
+  footer{
+    background:var(--ink); color:rgba(251,243,236,0.6);
+    padding:28px 0; border-top:1px solid rgba(251,243,236,0.12);
+    font-size:13px; text-align:center;
+  }
+  footer span{color:var(--mustard);}
+
+  @media (max-width: 880px){
+    .navlinks{display:none;}
+    .hero-grid, .about-grid, .contact-grid{grid-template-columns:1fr;}
+    .hero{padding-top:130px;}
+    .hero-photo img{height:380px;}
+    .courses{grid-template-columns:1fr;}
+    .gallery-grid{grid-template-columns:repeat(2,1fr); grid-auto-rows:140px;}
+    .gallery-grid figure:nth-child(1){grid-column:span 2; grid-row:span 1;}
+    .about-photo img{height:340px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a href="#inicio" class="brand">
+      <img src="images/logo.png" alt="Taller M">
+    </a>
+    <nav class="navlinks">
+      <a href="#inicio">Inicio</a>
+      <a href="#talleres">Talleres</a>
+      <a href="#galeria">Galería</a>
+      <a href="#faq">Preguntas</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <a href="#contacto" class="nav-cta">Reservar cupo</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section id="inicio" class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">Cerámica gres · hecha a mano</span>
+        <h1>Aprende a moldear<br><em>el barro</em>, paso a paso</h1>
+        <p>Taller M es un espacio íntimo de cerámica gres donde Magdalena te enseña, desde cero, a transformar un trozo de arcilla en piezas que usarás todos los días — tazas, platos, figuras y mucho más.</p>
+        <div class="hero-ctas">
+          <a href="#talleres" class="btn btn-primary">Ver talleres</a>
+          <a href="#contacto" class="btn btn-ghost">Escríbenos</a>
+        </div>
+      </div>
+      <div class="hero-photo">
+        <img src="images/magdalena.jpg" alt="Magdalena en su taller de cerámica">
+        <div class="hero-tag">hecho<br>a mano</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="sobre">
+    <div class="wrap about-grid">
+      <div class="about-photo">
+        <img src="images/g3_5.jpg" alt="Taza de cerámica gres hecha en Taller M">
+      </div>
+      <div class="about-text">
+        <span class="eyebrow">Quién hace las clases</span>
+        <h2>Magdalena, ceramista y profesora</h2>
+        <p>Detrás de Taller M está Magdalena, ceramista dedicada a la técnica del gres: piezas resistentes, de gran dureza y terminaciones cálidas, trabajadas a mano desde el torno hasta el esmaltado.</p>
+        <p>Sus clases están pensadas para que cualquier persona —tenga o no experiencia previa— pueda llevarse a casa piezas propias, aprendiendo las técnicas reales que se usan en un taller profesional.</p>
+        <p class="signature">"Mis manos no son manos si no juegan con el barro"</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TALLERES -->
+  <section id="talleres">
+    <div class="wrap">
+      <div class="section-head center">
+        <span class="eyebrow">Talleres disponibles</span>
+        <h2>Dos formas de empezar</h2>
+        <p>Ambos talleres son de 4 clases, una vez por semana, con todo el material incluido. La diferencia está en cuánto sabes y qué buscas aprender.</p>
+      </div>
+
+      <div class="courses">
+        <div class="course-card">
+          <span class="eyebrow">Para quienes parten de cero</span>
+          <h3>Taller Inicial</h3>
+          <div class="course-sub">Cuatro clases</div>
+          <ul class="feat">
+            <li>1 clase por semana</li>
+            <li>No necesitas experiencia previa</li>
+            <li>Material incluido</li>
+            <li>Taller guiado, paso a paso</li>
+            <li>Aprende las distintas técnicas del gres</li>
+          </ul>
+          <a href="#contacto" class="btn btn-ghost">Quiero este taller</a>
+        </div>
+
+        <div class="course-card featured">
+          <span class="eyebrow">Para seguir avanzando</span>
+          <h3>Taller Continuo</h3>
+          <div class="course-sub">Cuatro clases</div>
+          <ul class="feat">
+            <li>1 clase por semana</li>
+            <li>Pensado para personas con experiencia</li>
+            <li>Material incluido</li>
+            <li>Taller guiado por Magdalena</li>
+            <li>Profundiza tus propias piezas y técnicas</li>
+          </ul>
+          <a href="#contacto" class="btn btn-primary">Quiero este taller</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery" id="galeria">
+    <div class="wrap">
+      <div class="section-head center">
+        <span class="eyebrow">Trabajos del taller</span>
+        <h2>Algunas piezas hechas en gres</h2>
+        <p>Una muestra de lo que se crea en Taller M: vajilla, figuras, objetos para el hogar — todo hecho a mano, pieza por pieza.</p>
+      </div>
+      <div class="gallery-grid">
+        <figure><img src="images/g3_1.jpg" alt="Set de plato y bowls en gres celeste"></figure>
+        <figure><img src="images/g3_4.jpg" alt="Figuras de pesebre en cerámica gres"></figure>
+        <figure><img src="images/g4_2.jpg" alt="Bowl turquesa de cerámica gres"></figure>
+        <figure><img src="images/g4_5.jpg" alt="Casitas de cerámica blanca"></figure>
+        <figure><img src="images/g4_4.jpg" alt="Mantequillera roja de cerámica"></figure>
+        <figure><img src="images/g4_6.jpg" alt="Bowl verde de cerámica gres"></figure>
+        <figure><img src="images/g4_9.jpg" alt="Casita de cerámica con techo rojo"></figure>
+      </div>
+      <p class="insta-note">Ve más piezas y el día a día del taller en Instagram → <a href="https://www.instagram.com/tallerm.chile/" target="_blank" style="color:var(--clay-deep); text-decoration:underline;">@tallerm.chile</a></p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head center">
+        <span class="eyebrow">Antes de inscribirte</span>
+        <h2>Preguntas frecuentes</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item open">
+          <button class="faq-q">¿Necesito experiencia previa? <span class="icon">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">No. El Taller Inicial está diseñado para personas que nunca han trabajado con cerámica. El Taller Continuo es para quienes ya tomaron un taller y quieren seguir profundizando.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">¿Cuánto dura cada taller? <span class="icon">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">Ambos talleres constan de 4 clases, a razón de una clase por semana, en un grupo reducido y con guía directa de Magdalena.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">¿Qué incluye el material? <span class="icon">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">El material está incluido en el valor del taller: arcilla, herramientas de trabajo, esmaltes y la cocción de tus piezas en horno.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">¿Cuál es la diferencia entre el Taller Inicial y el Continuo? <span class="icon">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">El Inicial te enseña las distintas técnicas básicas del gres desde cero. El Continuo está pensado para personas con experiencia que quieren seguir desarrollando sus propias piezas.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">¿Cómo reservo mi cupo? <span class="icon">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">Escríbenos por WhatsApp o Instagram y te contamos los próximos horarios disponibles y cómo reservar tu lugar.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contacto">
+    <div class="wrap contact-grid">
+      <div>
+        <span class="eyebrow">Conversemos</span>
+        <h2>Reserva tu cupo en Taller M</h2>
+        <p>Cuéntanos qué taller te interesa y te respondemos con los próximos horarios disponibles.</p>
+        <div class="contact-channels">
+          <a class="channel" href="https://www.instagram.com/tallerm.chile/" target="_blank">
+            <div class="ic">IG</div>
+            <div>
+              <div class="channel-label">Instagram</div>
+              <div class="channel-value">@tallerm.chile</div>
+            </div>
+          </a>
+          <a class="channel" href="#">
+            <div class="ic">W</div>
+            <div>
+              <div class="channel-label">WhatsApp</div>
+              <div class="channel-value">+56 9 ···· ····</div>
+            </div>
+          </a>
+          <a class="channel" href="#">
+            <div class="ic">@</div>
+            <div>
+              <div class="channel-label">Email</div>
+              <div class="channel-value">hola@tallerm.cl</div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <form class="contact-form" onsubmit="event.preventDefault(); this.reset(); document.getElementById('form-ok').style.display='block';">
+        <label>Nombre</label>
+        <input type="text" placeholder="Tu nombre" required>
+        <label>Email o WhatsApp</label>
+        <input type="text" placeholder="Cómo te contactamos" required>
+        <label>Taller de interés</label>
+        <select>
+          <option>Taller Inicial</option>
+          <option>Taller Continuo</option>
+          <option>Aún no estoy segura/o</option>
+        </select>
+        <label>Mensaje</label>
+        <textarea placeholder="Cuéntanos qué te gustaría saber"></textarea>
+        <button type="submit" class="btn btn-primary">Enviar mensaje</button>
+        <p class="form-note" id="form-ok" style="display:none;">¡Gracias! Este formulario es de muestra — conéctalo a tu email o WhatsApp para recibir mensajes reales.</p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">© 2026 Taller M — Cerámica Gres · Hecho con <span>♥</span> a mano</div>
+</footer>
+
+<script>
+  document.querySelectorAll('.faq-q').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const item = btn.closest('.faq-item');
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+      if(!wasOpen) item.classList.add('open');
+    });
+  });
+</script>
+
+</body>
+</html>
